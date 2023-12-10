@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="purchase_request_view_form_inherit" model="ir.ui.view">
+            <field name="name">purchase_request_view_form_inherit</field>
+            <field name="model">purchase.requisition</field>
+            <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='vendor_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', 'in', ('approved', 'disapprove'))]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='currency_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', 'in', ('approved', 'disapprove'))]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='department_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', 'in', ('approved', 'disapprove'))]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='approver_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', 'in', ('approved', 'disapprove'))]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='line_ids']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', 'in', ('approved', 'disapprove'))]}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

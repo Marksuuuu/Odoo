@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_bills_tree_inherit" model="ir.ui.view">
+        <field name="name">view.bills.tree.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_invoice_tree"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='state']" position="after">
+                <field name="transfer_status" string='Transfer Status' attrs="{'invisible': [('is_mui_cip_transaction', '=', False)]}"/>
+<!--                <field name="transfer_status" invisible="context.get('is_mui_cip_transaction', False)"/>-->
+                <field name="is_mui_cip_transaction" invisible="1"/>
+            </xpath>
+
+
+        </field>
+    </record>
+
+    <record id="account.action_move_in_invoice_type" model="ir.actions.act_window">
+        <field name="domain">[('type', '=', 'in_invoice')]</field>
+    </record>
+
+    <record id="action_move_bills_to_transfer_type" model="ir.actions.act_window">
+        <field name="name">Bills to Transfer</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_id" ref="account.view_invoice_tree"/>
+        <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+        <field name="domain">[('type', '=', 'in_invoice'),('is_mui_cip_transaction', '=', True)]</field>
+        <field name="context">{'default_type': 'in_invoice'}
+        </field>
+    </record>
+
+    <menuitem id="menu_action_move_bills_to_transfer_type"
+              action="action_move_bills_to_transfer_type"
+              parent="account.menu_finance_payables"
+              sequence="200"/>
+</odoo>
